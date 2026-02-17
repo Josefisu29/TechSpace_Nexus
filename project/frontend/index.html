@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#111827" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Local AI Video Upscaler</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Local Hybrid AI Video Upscaler</h1>
+      <p class="subtitle">Fully local • Long-video safe • CPU/GPU compatible</p>
+
+      <form id="upscaleForm" class="panel">
+        <label>
+          Video file
+          <input type="file" id="videoFile" accept="video/*" required />
+        </label>
+
+        <label>
+          Target resolution
+          <select id="resolution" required>
+            <option value="360">360p</option>
+            <option value="480">480p</option>
+            <option value="720">720p</option>
+            <option value="1080" selected>1080p</option>
+            <option value="1440">1440p</option>
+            <option value="2048">2K (2048p)</option>
+            <option value="4096">4K (4096p)</option>
+            <option value="7680">8K (7680p)</option>
+          </select>
+        </label>
+
+        <button type="submit" id="submitBtn">Start Upscaling</button>
+      </form>
+
+      <section class="panel" id="statusPanel">
+        <p><strong>Status:</strong> <span id="statusText">idle</span></p>
+        <p><strong>Device:</strong> <span id="deviceText">-</span></p>
+        <div class="progress-wrapper">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p><span id="progressText">0%</span></p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

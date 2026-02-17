@@ -1,0 +1,9 @@
+{
+  "name": "Local Hybrid AI Video Upscaler",
+  "short_name": "AI Upscaler",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "icons": []
+}
