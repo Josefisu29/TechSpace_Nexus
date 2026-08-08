@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#090b12" />
+  <meta name="description" content="TechSpace AI Studio — train, evaluate, manage and deploy your AI models." />
+  <link rel="stylesheet" href="styles.css" />
+  <title>TechSpace AI Studio</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a class="brand" href="#overview" aria-label="TechSpace AI Studio home">
+        <span class="brand-mark">T</span>
+        <span><strong>TechSpace</strong><small>AI Studio</small></span>
+      </a>
+      <div class="workspace-switcher">
+        <span class="eyebrow">Workspace</span>
+        <button class="workspace-button"><span class="status-dot"></span> TechSpace AI <span>⌄</span></button>
+      </div>
+      <nav>
+        <span class="nav-label">Build</span>
+        <a class="nav-link active" href="#overview">⌂ <span>Overview</span></a>
+        <a class="nav-link" href="#datasets">◫ <span>Datasets</span></a>
+        <a class="nav-link" href="#training">◉ <span>Training</span><span class="nav-badge">1</span></a>
+        <a class="nav-link" href="#models">◇ <span>Models</span></a>
+        <a class="nav-link" href="#evaluations">✓ <span>Evaluations</span></a>
+        <span class="nav-label">Operate</span>
+        <a class="nav-link" href="#playground">✦ <span>Playground</span></a>
+        <a class="nav-link" href="#deployments">↗ <span>Deployments</span></a>
+        <a class="nav-link" href="#data-lab">▦ <span>Data Lab</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-link" href="#settings">⚙ <span>Settings</span></a>
+        <div class="user-chip"><div class="avatar">J</div><div><strong>TechSpace</strong><small>Owner</small></div><span>⋯</span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">T</span><strong>AI Studio</strong></div>
+        <div class="breadcrumbs"><span>TechSpace AI</span><b>/</b><strong>Overview</strong></div>
+        <div class="top-actions"><button class="icon-button" title="Search">⌕</button><button class="icon-button" title="Notifications">♢</button><button class="run-button">＋ New run</button></div>
+      </header>
+
+      <section class="content" id="overview">
+        <div class="hero-row">
+          <div><p class="eyebrow">Saturday · August 8, 2026</p><h1>Good morning, <span>TechSpace.</span></h1><p class="subhead">Your AI stack is healthy. One training run is currently in progress.</p></div>
+          <div class="hero-actions"><button class="secondary-button">View activity</button><button class="primary-button" onclick="location.hash='training'">Open training</button></div>
+        </div>
+
+        <div class="status-banner"><div class="pulse"></div><div><strong>TechSpace-LLM v0.1.0</strong><span>Training · checkpoint 18/40 · 43% complete</span></div><div class="banner-right"><span>ETA 28m</span><button onclick="location.hash='training'">Monitor →</button></div></div>
+
+        <div class="metrics-grid">
+          <article class="metric-card"><span class="metric-icon">◎</span><span class="metric-label">Training loss</span><strong>1.842</strong><span class="trend up">↓ 18.4% <small>vs start</small></span></article>
+          <article class="metric-card"><span class="metric-icon">◈</span><span class="metric-label">GPU utilization</span><strong>87%</strong><div class="mini-bar"><i style="width:87%"></i></div><span class="muted">A100 · 39.2 / 40 GB VRAM</span></article>
+          <article class="metric-card"><span class="metric-icon">▤</span><span class="metric-label">Dataset</span><strong>4.8M</strong><span class="muted">examples · v0.1.0</span></article>
+          <article class="metric-card"><span class="metric-icon">✓</span><span class="metric-label">Evaluation score</span><strong>74.6%</strong><span class="trend up">↑ 6.8% <small>vs base model</small></span></article>
+        </div>
+
+        <div class="section-grid">
+          <section class="panel chart-panel" id="training"><div class="panel-head"><div><h2>Training performance</h2><p>Loss across the current run</p></div><select><option>Last 40 checkpoints</option><option>Last 24 hours</option></select></div><div class="chart"><svg viewBox="0 0 900 280" preserveAspectRatio="none" aria-label="Training loss chart"><defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d5dfc" stop-opacity=".28"/><stop offset="1" stop-color="#6d5dfc" stop-opacity="0"/></linearGradient></defs><path class="gridline" d="M0 50H900M0 120H900M0 190H900M0 260H900"/><path class="area" d="M0 40 C60 55 90 80 140 92 S210 105 250 130 S330 115 370 158 S440 145 480 178 S560 170 600 195 S670 184 710 215 S790 204 840 230 S880 228 900 242 V280 H0Z"/><path class="line" d="M0 40 C60 55 90 80 140 92 S210 105 250 130 S330 115 370 158 S440 145 480 178 S560 170 600 195 S670 184 710 215 S790 204 840 230 S880 228 900 242"/></svg><div class="chart-labels"><span>1</span><span>10</span><span>20</span><span>30</span><span>40</span></div></div></section>
+          <section class="panel" id="models"><div class="panel-head"><div><h2>Active model</h2><p>Production candidate</p></div><span class="live-pill">LIVE</span></div><div class="model-card"><div class="model-logo">Q</div><div><strong>TechSpace-LLM</strong><span>v0.1.0 · Qwen3-0.6B base</span></div><button class="icon-button">⋯</button></div><div class="model-details"><div><span>Parameters</span><strong>0.6B</strong></div><div><span>Context</span><strong>32K</strong></div><div><span>Adapter</span><strong>QLoRA</strong></div></div><button class="full-button" onclick="location.hash='playground'">Test in Playground →</button></section>
+        </div>
+
+        <div class="section-grid lower" id="datasets">
+          <section class="panel"><div class="panel-head"><div><h2>Dataset health</h2><p>TechSpace Dataset · v0.1.0</p></div><button class="text-button" onclick="location.hash='data-lab'">Open Data Lab →</button></div><div class="quality-row"><div class="score-ring"><span>96</span><small>/100</small></div><div class="quality-list"><div><span>Quality</span><strong>98%</strong><i><em style="width:98%"></em></i></div><div><span>Deduplication</span><strong>94%</strong><i><em style="width:94%"></em></i></div><div><span>Provenance</span><strong>100%</strong><i><em style="width:100%"></em></i></div></div></div></section>
+          <section class="panel" id="evaluations"><div class="panel-head"><div><h2>Recent evaluations</h2><p>Regression-aware benchmark suite</p></div><button class="text-button">View all →</button></div><div class="eval-row"><span>Code generation</span><strong>81.2%</strong><b class="positive">+9.4%</b></div><div class="eval-row"><span>Math reasoning</span><strong>73.8%</strong><b class="positive">+5.1%</b></div><div class="eval-row"><span>Instruction following</span><strong>88.7%</strong><b class="positive">+3.8%</b></div><div class="eval-row"><span>Safety</span><strong>96.1%</strong><b class="neutral">stable</b></div></section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
