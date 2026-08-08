@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 import argparse
-import os
 from pathlib import Path
 
+import torch
 import yaml
 from datasets import Dataset
 from peft import LoraConfig
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments
-from trl import SFTTrainer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from trl import SFTConfig, SFTTrainer
 
 from .data import DatasetConfig, clean_dataset, load_text_dataset
 
@@ -18,16 +18,17 @@ def load_config(path: str) -> dict:
         return yaml.safe_load(f)
 
 
-def build_trainer(cfg: dict, dataset: Dataset) -> SFTTrainer:
+def build_trainer(cfg: dict, train_dataset: Dataset, eval_dataset: Dataset) -> SFTTrainer:
     model_id = cfg["model"]["id"]
     tokenizer = AutoTokenizer.from_pretrained(model_id, use_fast=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    compute_dtype = torch.bfloat16 if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else torch.float16
     bnb = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype="bfloat16",
+        bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=True,
     )
     model = AutoModelForCausalLM.from_pretrained(
@@ -35,6 +36,7 @@ def build_trainer(cfg: dict, dataset: Dataset) -> SFTTrainer:
         quantization_config=bnb,
         device_map="auto",
     )
+    model.config.use_cache = False
 
     lora_cfg = cfg["lora"]
     peft = LoraConfig(
@@ -47,7 +49,7 @@ def build_trainer(cfg: dict, dataset: Dataset) -> SFTTrainer:
     )
 
     t = cfg["training"]
-    args = TrainingArguments(
+    args = SFTConfig(
         output_dir=t["output_dir"],
         num_train_epochs=t["num_train_epochs"],
         per_device_train_batch_size=t["per_device_train_batch_size"],
@@ -59,20 +61,22 @@ def build_trainer(cfg: dict, dataset: Dataset) -> SFTTrainer:
         eval_steps=t["eval_steps"],
         save_total_limit=t["save_total_limit"],
         gradient_checkpointing=t["gradient_checkpointing"],
-        bf16=t["bf16"],
-        fp16=t["fp16"],
+        bf16=torch.cuda.is_available() and torch.cuda.is_bf16_supported() and t["bf16"],
+        fp16=torch.cuda.is_available() and not torch.cuda.is_bf16_supported() and t["fp16"],
         report_to=t["report_to"],
-        evaluation_strategy="steps",
+        eval_strategy="steps",
+        dataset_text_field=cfg["data"]["text_column"],
+        max_length=cfg["data"]["max_seq_length"],
+        packing=False,
     )
 
     return SFTTrainer(
         model=model,
         processing_class=tokenizer,
-        train_dataset=dataset,
+        train_dataset=train_dataset,
+        eval_dataset=eval_dataset,
         peft_config=peft,
         args=args,
-        dataset_text_field=cfg["data"]["text_column"],
-        max_seq_length=cfg["data"]["max_seq_length"],
     )
 
 
@@ -86,7 +90,7 @@ def main() -> None:
     data_cfg = DatasetConfig(**cfg["data"])
     dataset = clean_dataset(load_text_dataset(data_cfg), data_cfg.text_column)
     split = dataset.train_test_split(test_size=0.02, seed=42)
-    trainer = build_trainer(cfg, split["train"])
+    trainer = build_trainer(cfg, split["train"], split["test"])
 
     trainer.train(resume_from_checkpoint=args.resume)
     output_dir = Path(cfg["training"]["output_dir"])
