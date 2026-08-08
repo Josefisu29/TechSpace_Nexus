@@ -3,8 +3,8 @@ model:
   trust_remote_code: false
 
 data:
-  dataset_id: HuggingFaceFW/fineweb-edu
-  config: sample-10BT
+  dataset_id: ./data/processed/techspace-dataset-0.1.0.parquet
+  config: null
   split: train
   max_samples: 10000
   max_seq_length: 2048
