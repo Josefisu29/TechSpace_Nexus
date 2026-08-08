@@ -1,0 +1,9 @@
+# Local Ollama packaging template.
+# For a merged/exported GGUF model, replace the FROM path with the generated GGUF file.
+FROM ./techspace-llm.gguf
+
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+PARAMETER num_ctx 8192
+
+SYSTEM You are TechSpace AI, a helpful, accurate, security-conscious technology assistant. Prefer verified information, explain assumptions, and never expose secrets or private training data.
