@@ -1,0 +1,123 @@
+version: 1
+
+# Dataset sources are manifests, not automatic permission to train on the source.
+# Every source must pass license/provenance review before it is enabled.
+sources:
+  - id: fineweb_edu
+    hf_id: HuggingFaceFW/fineweb-edu
+    config: sample-10BT
+    split: train
+    text_column: text
+    category: general_educational
+    enabled: true
+    license_review: required
+    provenance: Common Crawl-derived; use the dataset's current card/terms.
+
+  - id: dolma
+    hf_id: allenai/dolma
+    config: dolma-v1_7
+    split: train
+    text_column: text
+    category: general_multidomain
+    enabled: false
+    license_review: required
+    provenance: Allen Institute for AI; review current dataset card and source terms.
+
+  - id: code
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: code
+    enabled: false
+    license_review: required
+    provenance: Add only code sources with compatible licenses and retained provenance metadata.
+
+  - id: computer_science
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: computer_science
+    enabled: false
+    license_review: required
+    provenance: Curated/licensed educational and technical material only.
+
+  - id: mathematics
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: mathematics
+    enabled: false
+    license_review: required
+    provenance: Curated/licensed material with verified answer quality.
+
+  - id: instruction
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: instruction
+    enabled: false
+    license_review: required
+    provenance: Curated or appropriately licensed instruction examples.
+
+  - id: agent_tool_use
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: agent_tool_use
+    enabled: false
+    license_review: required
+    provenance: Synthetic or licensed examples with deterministic tool schemas.
+
+  - id: africa_nigeria
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: africa_nigeria
+    enabled: false
+    license_review: required
+    provenance: Public-domain, licensed, or explicitly authorized African/Nigerian material.
+
+  - id: safety
+    hf_id: null
+    config: null
+    split: train
+    text_column: text
+    category: safety
+    enabled: false
+    license_review: required
+    provenance: Curated safety examples; do not ingest private user conversations automatically.
+
+  - id: evaluation
+    hf_id: null
+    config: null
+    split: test
+    text_column: text
+    category: evaluation
+    enabled: false
+    license_review: required
+    provenance: Held-out evaluation data. Never add this source to training automatically.
+
+processing:
+  min_chars: 40
+  max_chars: 200000
+  min_words: 8
+  max_repeated_line_ratio: 0.2
+  deduplicate: true
+  near_deduplicate: true
+  normalize_unicode: true
+  strip_nulls: true
+  strip_control_chars: true
+  require_license_metadata: true
+  require_source_metadata: true
+
+output:
+  format: parquet
+  directory: data/processed
+  dataset_name: techspace-dataset
+  version: 0.1.0
