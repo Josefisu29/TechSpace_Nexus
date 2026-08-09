@@ -1,0 +1,79 @@
+version: 2
+policy:
+  download_mode: manifest_only
+  require_license_metadata: true
+  exclude_unverified_sources: true
+  pii_scan: required
+  secrets_scan: required
+  malware_scan: required
+  exact_dedup: required
+  near_dedup: required
+  contamination_check: required
+  keep_source_provenance: true
+
+# These are source manifests, not data checked into Git.
+# Large corpora are streamed/downloaded into object storage or Colab volumes.
+datasets:
+  - id: fineweb2
+    repo: HuggingFaceFW/fineweb-2
+    role: pretraining_multilingual
+    license: ODC-By-1.0
+    source_policy: upstream_terms_required
+  - id: fineweb_edu
+    repo: HuggingFaceFW/fineweb-edu
+    role: high_quality_education
+    license: ODC-By-1.0
+    source_policy: upstream_terms_required
+  - id: finepdfs
+    repo: HuggingFaceFW/finepdfs
+    role: long_form_documents
+    license: ODC-By-1.0
+    source_policy: commoncrawl_terms_and_optout_required
+  - id: dolma
+    repo: allenai/dolma
+    role: english_pretraining
+    license: ODC-By-1.0
+    source_policy: source_terms_required
+  - id: openwebmath
+    repo: open-web-math/open-web-math
+    role: mathematics
+    license: ODC-By-1.0
+    source_policy: commoncrawl_terms_required
+  - id: aya_collection
+    repo: CohereLabs/aya_collection
+    role: multilingual_instruction
+    license: Apache-2.0
+    source_policy: source_terms_required
+  - id: oasst1
+    repo: OpenAssistant/oasst1
+    role: human_assistant_dialogue
+    license: Apache-2.0
+  - id: ultrachat_200k
+    repo: HuggingFaceH4/ultrachat_200k
+    role: supervised_instruction
+    license: MIT
+  - id: stackv2
+    repo: common-pile/stackv2
+    role: source_code
+    license: per_document
+    source_policy: license_allowlist_required
+  - id: fineweb_edu_optional
+    repo: HuggingFaceFW/fineweb-edu
+    role: educational_midtraining
+    license: ODC-By-1.0
+    source_policy: upstream_terms_required
+
+mixture:
+  pretraining:
+    - fineweb2
+    - fineweb_edu
+    - finepdfs
+    - dolma
+    - openwebmath
+  instruction:
+    - aya_collection
+    - oasst1
+    - ultrachat_200k
+  code:
+    - stackv2
+  note: "Do not blindly concatenate all corpora. Weight, deduplicate and validate each source before mixing."
