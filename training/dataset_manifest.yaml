@@ -1,0 +1,47 @@
+schema_version: 1
+datasets:
+  - id: fineweb2
+    repo: HuggingFaceFW/fineweb-2
+    role: multilingual_pretraining
+    license: odc-by-1.0
+    selection: quality_filtered_multilingual_web
+  - id: dolma-v1_7
+    repo: allenai/dolma
+    role: english_pretraining_mix
+    license: odc-by
+    selection: v1_7
+    warning: source-level licenses and terms also apply
+  - id: open-web-math
+    repo: open-web-math/open-web-math
+    role: math_stem
+    license: odc-by-1.0
+    selection: full
+  - id: aya-collection
+    repo: CohereLabs/aya_collection
+    role: multilingual_instruction
+    license: apache-2.0
+    selection: curated_and_licensed_subset
+    warning: verify individual source licenses before commercial training
+  - id: the-stack-v2
+    repo: bigcode/the-stack-v2
+    role: source_code
+    selection: license_filtered_only
+    warning: retain source license metadata and exclude incompatible repositories
+
+processing:
+  required_steps:
+    - license_policy_filter
+    - pii_detection_and_removal
+    - malware_and_payload_filter
+    - language_identification
+    - unicode_normalization
+    - html_boilerplate_removal
+    - quality_filtering
+    - exact_deduplication
+    - near_deduplication
+    - benchmark_contamination_check
+    - document_length_filter
+    - secret_and_credential_scan
+    - dataset_mixture_weighting
+    - train_validation_test_split
+  never_train_on_unreviewed_user_conversations: true
