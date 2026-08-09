@@ -1,0 +1,88 @@
+version: 1
+# Reproducible acquisition manifest. Large assets are downloaded at runtime, never committed to Git.
+models:
+  - id: qwen3-30b-a3b
+    repo: Qwen/Qwen3-30B-A3B
+    source: huggingface
+    role: general_reasoning
+    license: apache-2.0
+    revision: main
+    production_requires_pinned_revision: true
+  - id: qwen3-coder-30b-a3b-instruct
+    repo: Qwen/Qwen3-Coder-30B-A3B-Instruct
+    source: huggingface
+    role: coding
+    license: apache-2.0
+    revision: main
+    production_requires_pinned_revision: true
+  - id: bge-m3
+    repo: BAAI/bge-m3
+    source: huggingface
+    role: embeddings
+    license: mit
+    revision: main
+    production_requires_pinned_revision: true
+  - id: qwen3-embedding-8b
+    repo: Qwen/Qwen3-Embedding-8B
+    source: huggingface
+    role: embeddings
+    license: apache-2.0
+    revision: main
+    production_requires_pinned_revision: true
+
+datasets:
+  - id: fineweb2
+    repo: HuggingFaceFW/fineweb-2
+    source: huggingface
+    role: multilingual_pretraining
+    license: odc-by-1.0
+    mode: streaming_or_sharded
+  - id: fineweb-edu
+    repo: HuggingFaceFW/fineweb-edu
+    source: huggingface
+    role: educational_pretraining
+    license: odc-by-1.0
+    mode: streaming_or_sharded
+  - id: dolma
+    repo: allenai/dolma
+    source: huggingface
+    role: general_pretraining
+    license: odc-by
+    mode: streaming_or_sharded
+  - id: finepdfs
+    repo: HuggingFaceFW/finepdfs
+    source: huggingface
+    role: document_pretraining
+    license: odc-by-1.0
+    mode: streaming_or_sharded
+  - id: open-web-math
+    repo: open-web-math/open-web-math
+    source: huggingface
+    role: mathematics
+    license: odc-by-1.0
+    mode: streaming_or_sharded
+  - id: aya-collection
+    repo: CohereLabs/aya_collection
+    source: huggingface
+    role: multilingual_instruction
+    license: apache-2.0
+    mode: streaming_or_sharded
+  - id: oasst1
+    repo: OpenAssistant/oasst1
+    source: huggingface
+    role: instruction_chat
+    license: apache-2.0
+    mode: download
+  - id: ultrachat-200k
+    repo: HuggingFaceH4/ultrachat_200k
+    source: huggingface
+    role: instruction_chat
+    license: mit
+    mode: download
+  - id: stackv2
+    repo: common-pile/stackv2
+    source: huggingface
+    role: licensed_code
+    license: mixed_per_document
+    mode: streaming_or_sharded
+    require_per_document_license_filter: true
