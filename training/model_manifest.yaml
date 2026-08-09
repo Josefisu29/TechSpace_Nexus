@@ -1,0 +1,62 @@
+schema_version: 1
+models:
+  - id: qwen3-30b-a3b
+    repo: Qwen/Qwen3-30B-A3B
+    role: general_reasoning_agent
+    license: apache-2.0
+    source: huggingface
+    ollama: qwen3:30b-a3b
+    revision: PIN_REQUIRED
+    backups: [phi-4, smollm3-3b]
+  - id: qwen3-235b-a22b
+    repo: Qwen/Qwen3-235B-A22B
+    role: high_end_supervisor
+    license: apache-2.0
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [qwen3-30b-a3b, phi-4]
+  - id: qwen3-coder-30b-a3b-instruct
+    repo: Qwen/Qwen3-Coder-30B-A3B-Instruct
+    role: coding_agent
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [qwen3-30b-a3b, phi-4]
+  - id: phi-4
+    repo: microsoft/phi-4
+    role: compact_reasoning_coding
+    license: mit
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [smollm3-3b]
+  - id: smollm3-3b
+    repo: HuggingFaceTB/SmolLM3-3B
+    role: edge_router
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [phi-4]
+  - id: qwen3-embedding-8b
+    repo: Qwen/Qwen3-Embedding-8B
+    role: embeddings
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [qwen3-embedding-4b, bge-m3]
+  - id: qwen3-embedding-4b
+    repo: Qwen/Qwen3-Embedding-4B
+    role: embeddings
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [bge-m3]
+  - id: bge-m3
+    repo: BAAI/bge-m3
+    role: embeddings
+    license: mit
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: [qwen3-embedding-4b]
+  - id: bge-reranker-v2-m3
+    repo: BAAI/bge-reranker-v2-m3
+    role: reranker
+    license: apache-2.0
+    source: huggingface
+    revision: PIN_REQUIRED
+    backups: []
