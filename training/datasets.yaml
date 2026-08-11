@@ -1,0 +1,50 @@
+version: 1
+
+# Use streaming for large corpora. Never commit downloaded data to Git.
+datasets:
+  - id: fineweb2
+    source: HuggingFaceFW/fineweb-2
+    category: general
+    mode: streaming
+    enabled: true
+  - id: fineweb-edu
+    source: HuggingFaceFW/fineweb-edu
+    category: education
+    mode: streaming
+    enabled: true
+  - id: openwebmath
+    source: open-web-math/open-web-math
+    category: mathematics
+    mode: streaming
+    enabled: true
+  - id: aya-collection
+    source: CohereLabs/aya_collection
+    category: multilingual
+    mode: streaming
+    enabled: true
+  - id: oasst1
+    source: OpenAssistant/oasst1
+    category: conversation
+    mode: download
+    enabled: true
+  - id: ultrachat-200k
+    source: HuggingFaceH4/ultrachat_200k
+    category: instruction
+    mode: download
+    enabled: true
+
+mixture:
+  general: 0.30
+  education: 0.15
+  code: 0.15
+  instruction: 0.15
+  reasoning: 0.10
+  mathematics: 0.05
+  multilingual: 0.05
+  tools: 0.05
+
+policy:
+  require_license_metadata: true
+  reject_unknown_license: true
+  max_local_cache_gb: 10
+  output_format: jsonl
