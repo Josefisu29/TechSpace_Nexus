@@ -14,3 +14,16 @@ wandb/
 .cache/
 .DS_Store
 .ipynb_checkpoints/
+
+# AI training data and local model caches
+data/raw/
+data/cache/
+data/normalized/
+data/processed/
+data/rejected/
+data/balanced/
+*.safetensors
+*.bin
+*.gguf
+*.pt
+*.pth
